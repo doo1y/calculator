@@ -1,0 +1,17 @@
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.frame {
+	width: 450px;
+	height: 680px;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	border: 5px solid rgb(126, 126, 126);
+	border-radius: 5%;
+	background-color: #a0d5f6;
+}
