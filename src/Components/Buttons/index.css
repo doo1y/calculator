@@ -122,3 +122,49 @@ button {
 	justify-self: center;
 	border-radius: 20%;
 }
+
+button.numbers {
+	display: grid;
+	grid-template-columns: 16px 32px 16px;
+	grid-template-rows: 14px 18px;
+	grid-template-areas:
+		"sec . alph"
+		". main .";
+	align-content: space-evenly;
+	justify-items: center;
+}
+
+button.rightFns,
+button.leftFns,
+button.midFns,
+button.topFns {
+	display: grid;
+	grid-template-columns: 14px 30px 14px;
+	grid-template-rows: 13px 18px;
+	grid-template-areas:
+		"sec . alph"
+		". main .";
+	align-content: space-evenly;
+	justify-items: center;
+}
+
+span.mainChar {
+	grid-area: main;
+	width: 40px;
+	font-size: 16px;
+	color: #40404c;
+}
+
+span.alphaChar {
+	grid-area: alph;
+	width: 20px;
+	color: #0007f0;
+}
+
+span.secChar {
+	grid-area: sec;
+	width: 20px;
+	color: #2c613b;
+	font-size: 10px;
+	display: inline-flex;
+}

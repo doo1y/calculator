@@ -2,87 +2,36 @@
 // TODO: Refactor ALL functions so that ALL values used as arguments are changed before, not within
 // TODO: Refactor what happens when ENTER is clicked
 
-import {
-	useState,
-	useEffect,
-	useMemo,
-	isValidElement,
-	createElement,
-} from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { useState, useMemo, isValidElement, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
-import { dataAdded } from "./dataSlice";
+import { evaluate, log } from "mathjs";
+import { addData } from "./ReduxSlice/dataSlice";
+import { addVar } from "./ReduxSlice/varSlice";
 import Screen from "./Components/Screen";
 import Buttons from "./Components/Buttons";
-import { evaluate, log } from "mathjs";
+import changeFocus from "./Actions/changeFocus";
+import delVal from "./Actions/delVal";
+import leftRight from "./Actions/leftRight";
+import registerInput from "./Actions/registerInput";
+import renderInput from "./Actions/renderInput";
 import "./App.css";
-
-// function which handles how the pointer should be moved, left or right
-function leftRight(d, n, p) {
-	n[p][1] = "";
-	if (d === "left") n[p - 1][1] = "pointer";
-	else n[p + 1][1] = "pointer";
-	return n;
-}
-
-// function which outputs input to screen whenever valid button is clicked
-const renderInput = (numData, logMode) => {
-	if (logMode) {
-		return {
-			base: numData.Base.v.map(([c, p], i) => (
-				<span key={i} className={p}>
-					{c}
-				</span>
-			)),
-			n: numData.Num.v.map(([c, p], i) => (
-				<span key={i} className={p}>
-					{c}
-				</span>
-			)),
-		};
-	}
-	return numData.map(([c, p], i) => (
-		<span key={i} className={p}>
-			{c}
-		</span>
-	));
-};
-
-const registerInput = (n, p, v) => {
-	let val =
-		v === "^2" || v === "^-1" ? createElement("sup", {}, v.slice(1)) : v;
-	n[p] = [val, ""];
-	if (p === n.length - 1) n.push([<span>&nbsp;&nbsp;</span>, "pointer"]);
-	else n[p + 1] = [n[p + 1][0], "pointer"];
-	return n;
-};
-
-const changeFocus = (arr) => {
-	const idx = arr.findIndex(([v, p]) => p === "pointer");
-	if (idx >= 0) {
-		arr[idx][1] = "";
-	} else arr[arr.length - 1][1] = "pointer";
-	return arr;
-};
-
-const delVal = (n, p) => {
-	if (p === n.length - 1) {
-		n.splice(p - 1, 1);
-	} else if (p !== n.length - 1) {
-		n[p - 1][1] = "pointer";
-		n.splice(p, 1);
-	}
-	return n;
-};
 
 const App = () => {
 	const [cache, setCache] = useState({});
 	const [numData, setNumData] = useState([
 		[<span>&nbsp;&nbsp;</span>, "pointer"],
 	]);
+	const [secMode, setSecMode] = useState(false);
 	const [logMode, setLogMode] = useState(false);
 	const [pointer, setPointer] = useState(0);
+	const [alphaMode, setAlphaMode] = useState({ a: false, lock: false });
+	const [stoMode, setStoMode] = useState(false);
+	const [on, setOn] = useState(false);
 	const data = useSelector((state) => state.data);
+	const vars = useSelector((state) => state.vars);
 	const dispatch = useDispatch();
 
 	const userInput = useMemo(
@@ -90,7 +39,48 @@ const App = () => {
 		[numData, pointer]
 	);
 
+	const turnOn = (e) => {
+		e.preventDefault();
+		setOn(!on);
+	};
+
 	const buttonClickFns = {
+		secBtnClick: (e) => {
+			e.preventDefault();
+			setSecMode(!secMode);
+		},
+		modeBtnClick: (e) => {
+			e.preventDefault();
+			if (secMode) {
+				if (logMode) {
+					setNumData(cache.numData);
+					setPointer(cache.pointer);
+					setCache({});
+					setLogMode(false);
+				}
+			}
+		},
+		alphaClick: (e) => {
+			e.preventDefault();
+			secMode && alphaMode.a
+				? setAlphaMode({ a: false, lock: false })
+				: secMode
+				? setAlphaMode({ a: true, lock: true })
+				: setAlphaMode({ a: !alphaMode.a, lock: false });
+			if (secMode) setSecMode(!secMode);
+		},
+		stoClick: (e) => {
+			e.preventDefault();
+			setNumData(
+				registerInput(
+					numData,
+					pointer,
+					<FontAwesomeIcon icon={solid("arrow-right")} className='sto' />
+				)
+			);
+			setStoMode(true);
+			setPointer(pointer + 1);
+		},
 		leftClick: (e) => {
 			e.preventDefault();
 			if (pointer > 0) {
@@ -128,27 +118,40 @@ const App = () => {
 					setPointer(newData.Num.v.length - 1);
 				}
 				setNumData(newData);
+			} else {
+				if (!Object.keys(cache).length) {
+					setCache({ numData: numData, pointer: pointer });
+					setPointer(data.length - 1);
+					setNumData();
+					// Array.from(data[pointer].content.toString()).map(x => <span>x</span>)
+				}
 			}
 		},
 		onGenClick: (e) => {
 			e.preventDefault();
-			if (!logMode) {
-				setNumData(registerInput(numData, pointer, e.currentTarget.value));
-				setPointer(pointer + 1);
-			}
+			const values = e.currentTarget.value.split(",");
+			let val;
+			if (!alphaMode.a) val = values[1];
+			else val = values[2];
+			setNumData(registerInput(numData, pointer, val));
+			setPointer(pointer + 1);
+			if (secMode) setSecMode(!secMode);
+			if (alphaMode.a && !alphaMode.lock)
+				setAlphaMode({ a: !alphaMode.a, lock: false });
 		},
 		onGenClickLog: (e) => {
 			e.preventDefault();
+			const values = e.currentTarget.value.split(",");
 			setNumData({
 				Base: {
 					v: numData.Base.focused
-						? registerInput(numData.Base.v, pointer, e.currentTarget.value)
+						? registerInput(numData.Base.v, pointer, values[1])
 						: numData.Base.v,
 					focused: numData.Base.focused,
 				},
 				Num: {
 					v: numData.Num.focused
-						? registerInput(numData.Num.v, pointer, e.currentTarget.value)
+						? registerInput(numData.Num.v, pointer, values[1])
 						: numData.Num.v,
 					focused: numData.Num.focused,
 				},
@@ -169,8 +172,15 @@ const App = () => {
 		},
 		onClearClick: (e) => {
 			e.preventDefault();
-			setNumData([[<span>&nbsp;&nbsp;</span>, "pointer"]]);
-			setPointer(0);
+			if (logMode) {
+				setNumData(cache.numData);
+				setPointer(cache.pointer);
+				setCache({});
+				setLogMode(false);
+			} else {
+				setNumData([[<span>&nbsp;&nbsp;</span>, "pointer"]]);
+				setPointer(0);
+			}
 		},
 		onDelClick: (e) => {
 			e.preventDefault();
@@ -189,8 +199,11 @@ const App = () => {
 						focused: numData.Num.focused,
 					},
 				});
-			} else setNumData(delVal(numData, pointer));
-			setPointer(pointer - 1);
+				setPointer(pointer - 1);
+			} else if (!logMode) {
+				setNumData(delVal(numData, pointer));
+				setPointer(pointer - 1);
+			}
 		},
 		onEnterClick: async (e) => {
 			e.preventDefault();
@@ -214,28 +227,109 @@ const App = () => {
 				setPointer(cache.pointer + 1);
 				setCache({});
 				setLogMode(false);
+			} else if (stoMode) {
+				const stoIdx = numData.findIndex(
+					([v, p]) =>
+						isValidElement(v) && v.props.className.split(" ").includes("sto")
+				);
+				try {
+					const a = numData.slice(0, stoIdx);
+					const b = numData.slice(stoIdx + 1);
+					const aMap = a.map(([v, p]) => {
+						if (v === "ln(") return `log(`;
+						else if (isValidElement(v) && v.props.className === "logValue") {
+							return log(
+								v.props.children[3][0],
+								v.props.children[1].props.children[0]
+							);
+						} else if (v.type === "sup") {
+							switch (v.props.className) {
+								case "startend":
+									console.log(`^(${v.props.children})`);
+									return `^(${v.props.children})`;
+								case "start":
+									console.log(`^(${v.props.children}`);
+									return `^(${v.props.children}`;
+								case "mid":
+									console.log(`${v.props.children}`);
+									return `${v.props.children}`;
+								case "end":
+									console.log(")");
+									return `)`;
+							}
+						} else if (isValidElement(v) && !v.props.children) return;
+						else if (isValidElement(v)) return "";
+						else return v;
+					});
+					const bMap = b.map(([v, p]) => {
+						if (isValidElement(v)) return "";
+						if (/^[A-Z]*$/.test(v) && v.length > 0) return v;
+						throw new TypeError();
+					});
+					const ans = evaluate(aMap.join(""));
+					const variable = bMap.join("");
+					if (ans && variable) {
+						dispatch(
+							addVar({
+								id: variable,
+								content: ans,
+							})
+						);
+						dispatch(
+							addData({
+								id: nanoid(),
+								content: ans,
+							})
+						);
+						setNumData([[<span>&nbsp;&nbsp;</span>, "pointer"]]);
+						setPointer(0);
+						setStoMode(false);
+					}
+				} catch (e) {
+					console.log(e);
+				}
 			} else {
-				const n = numData.map(([v, p]) => {
-					if (v === "ln(") return `log(`;
+				const counter = 0;
+				const n = numData.map(([v, p], i) => {
+					if (/^[A-Z]*$/.test(v) && v.length > 0) {
+						const val = vars.find((el) => el.id === v);
+						if (!val) {
+							return 0;
+						} else return val.content;
+					} else if (v === "e") return Math.E;
+					else if (v === "ln(") return `log(`;
 					else if (isValidElement(v) && v.props.className === "logValue") {
 						return log(
 							v.props.children[3][0],
 							v.props.children[1].props.children[0]
 						);
-					} else if (v.type === "sup") return `^${v.props.children}`;
-					else if (isValidElement(v) && !v.props.children) return;
+					} else if (v.type === "sup") {
+						switch (v.props.className) {
+							case "startend":
+								console.log(`^(${v.props.children})`);
+								return `^(${v.props.children})`;
+							case "start":
+								console.log(`^(${v.props.children}`);
+								return `^(${v.props.children}`;
+							case "mid":
+								console.log(`${v.props.children}`);
+								return `${v.props.children}`;
+							case "end":
+								console.log(")");
+								return `)`;
+						}
+					} else if (isValidElement(v) && !v.props.children) return;
 					else if (isValidElement(v)) return "";
 					else return v;
 				});
-				console.log(n.join(""));
 				try {
 					const ans = evaluate(n.join(""));
-					if (ans && numData.length) {
+					console.log(ans);
+					if (ans && n.length) {
 						dispatch(
-							dataAdded({
+							addData({
 								id: nanoid(),
 								content: ans,
-								type: "alphnum",
 							})
 						);
 						setNumData([[<span>&nbsp;&nbsp;</span>, "pointer"]]);
@@ -243,7 +337,6 @@ const App = () => {
 					}
 				} catch (e) {
 					console.log(e);
-					setError(typeof e);
 				}
 			}
 		},
@@ -268,9 +361,20 @@ const App = () => {
 	return (
 		<div className='App'>
 			<div className='frame'>
-				<Screen data={data} inputs={inputs} logMode={logMode} />
+				<Screen
+					data={on ? data : []}
+					inputs={on ? inputs : []}
+					logMode={logMode}
+					appOn={on}
+				/>
 
-				<Buttons buttonClickFns={buttonClickFns} logMode={logMode} />
+				<Buttons
+					buttonClickFns={on ? buttonClickFns : ""}
+					logMode={logMode}
+					turnOn={turnOn}
+					alphaMode={alphaMode}
+					secMode={secMode}
+				/>
 			</div>
 		</div>
 	);

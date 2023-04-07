@@ -13,6 +13,13 @@ div.screen {
 	color: #000;
 }
 
+div.welcome-screen {
+	align-self: center;
+	margin-bottom: 40px;
+	display: grid;
+	justify-items: center;
+}
+
 div.logScreen {
 	align-self: center;
 	margin-bottom: 40px;

@@ -3,16 +3,17 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const RightFns = ({ click }) => {
 	const fns = [
-		[<FontAwesomeIcon icon={solid("xmark")} />, " * "],
-		[<FontAwesomeIcon icon={solid("plus")} />, " + "],
-		[<FontAwesomeIcon icon={solid("minus")} />, " - "],
-		["Enter"],
+		[["[", <FontAwesomeIcon icon={solid("xmark")} />, "R"], ",*,R"],
+		[["]", <FontAwesomeIcon icon={solid("plus")} />, "W"], ",+,W"],
+		[["mem", <FontAwesomeIcon icon={solid("minus")} />, '"'], ',-,"'],
+		[["entry", "enter"]],
 	];
 
 	const rightFns = fns.map((fn, idx) => {
-		return fn[0] === "Enter" ? (
+		return fn[0][1] === "enter" ? (
 			<button key={idx} onClick={click.onEnterClick} className='rightFns enter'>
-				{fn}
+				<span className='secChar'>{fn[0][0]}</span>
+				<span className='mainChar'>{fn[0][1]}</span>
 			</button>
 		) : (
 			<button
@@ -20,7 +21,9 @@ const RightFns = ({ click }) => {
 				value={fn[1]}
 				onClick={click.onGenClick}
 				className='rightFns'>
-				{fn[0]}
+				<span className='secChar'>{fn[0][0]}</span>
+				<span className='mainChar'>{fn[0][1]}</span>
+				<span className='alphaChar'>{fn[0][2]}</span>
 			</button>
 		);
 	});

@@ -3,38 +3,86 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const MidFns = ({ click }) => {
 	const fns = [
-		["MATH"],
-		["APPS"],
-		["PRGM"],
-		["VARS"],
-		["CLEAR", click.onClearClick],
+		[["test", "math", "A"], click.onGenClick, ",,A"],
+		[["angle", "apps", "B"], click.onGenClick, ",,B"],
+		[["draw", "prgm", "C"], click.onGenClick, ",,C"],
+		[["distr", "vars"], click.onGenClick, ","],
+		[["", "clear", ""], click.onClearClick],
 		[
-			<>
-				x<sup>-1</sup>
-			</>,
+			[
+				"matrix",
+				<>
+					x<sup>-1</sup>
+				</>,
+				"D",
+			],
 			click.onGenClick,
-			"^-1",
+			",^-1,D",
 		],
-		["SIN", click.onGenClick, "sin("],
-		["COS", click.onGenClick, "cos("],
-		["TAN", click.onGenClick, "tan("],
-		[<FontAwesomeIcon icon={solid("chevron-up")} />, click.onGenClick, "^"],
 		[
-			<>
-				x<sup>2</sup>
-			</>,
+			[
+				<>
+					sin<sup>-1</sup>
+				</>,
+				"sin",
+				"E",
+			],
 			click.onGenClick,
-			"^2",
+			",sin(,E",
 		],
-		[",", click.onGenClick, ","],
-		["(", click.onGenClick, "("],
-		[")", click.onGenClick, ")"],
-		[<FontAwesomeIcon icon={solid("divide")} />, click.onGenClick, "/"],
+		[
+			[
+				<>
+					cos<sup>-1</sup>
+				</>,
+				"cos",
+				"F",
+			],
+			click.onGenClick,
+			",cos(,F",
+		],
+		[
+			[
+				<>
+					tan<sup>-1</sup>,
+				</>,
+				"tan",
+				"G",
+			],
+			click.onGenClick,
+			",tan(,G",
+		],
+		[
+			[<>&pi;</>, <FontAwesomeIcon icon={solid("chevron-up")} />, "H"],
+			click.onGenClick,
+			",^,H",
+		],
+		[
+			[
+				<>&#x221A;</>,
+				<>
+					x<sup>2</sup>
+				</>,
+				"I",
+			],
+			click.onGenClick,
+			",^2,I",
+		],
+		[["EE", ",", "J"], click.onGenClick, ",,J"],
+		[["{", "(", "K"], click.onGenClick, ",(,K"],
+		[["}", ")", "L"], click.onGenClick, ",),L"],
+		[
+			["e", <FontAwesomeIcon icon={solid("divide")} />, "M"],
+			click.onGenClick,
+			",/,M",
+		],
 	];
 
 	const midFns = fns.map((fn, idx) => (
 		<button key={idx} value={fn[2]} onClick={fn[1]} className='midFns'>
-			{fn[0]}
+			<span className='secChar'>{fn[0][0]}</span>
+			<span className='mainChar'>{fn[0][1]}</span>
+			<span className='alphaChar'>{fn[0][2]}</span>
 		</button>
 	));
 
