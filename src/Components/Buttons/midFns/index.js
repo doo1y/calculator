@@ -3,7 +3,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const MidFns = ({ click }) => {
 	const fns = [
-		[["test", "math", "A"], click.onGenClick, ",,A"],
+		[["test", "math", "A"], click.mathBtnClick, ",,A"],
 		[["angle", "apps", "B"], click.onGenClick, ",,B"],
 		[["draw", "prgm", "C"], click.onGenClick, ",,C"],
 		[["distr", "vars"], click.onGenClick, ","],

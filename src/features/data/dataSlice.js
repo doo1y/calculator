@@ -6,12 +6,12 @@ const dataSlice = createSlice({
 	name: "data",
 	initialState,
 	reducers: {
-		addData(state, action) {
+		dataAdded(state, action) {
 			state.push(action.payload);
 		},
 	},
 });
 
-export const { addData } = dataSlice.actions;
+export const { dataAdded } = dataSlice.actions;
 
 export default dataSlice.reducer;

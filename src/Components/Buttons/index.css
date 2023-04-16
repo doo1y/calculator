@@ -1,10 +1,11 @@
 .buttons-frame {
-	width: 430px;
-	height: 450px;
+	width: 450px;
+	height: 500px;
 	display: grid;
 	grid-template-columns: 75px 193px 107px 75px;
-	grid-template-rows: 100px 140px 170px;
+	grid-template-rows: 25px 100px 140px 170px;
 	grid-template-areas:
+		"upperBtns upperBtns upperBtns upperBtns"
 		"topFns topFns ctrlBtn ctrlBtn"
 		"midFns midFns midFns midFns"
 		"leftFns numbers numbers rightFns";
@@ -21,6 +22,17 @@
 	gap: 1.5px 2px;
 	grid-column: span 4 / 6;
 	grid-area: numbers;
+}
+
+.upperFns-frame {
+	grid-area: upperBtns;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+}
+
+.upperFns {
+	height: 24px;
 }
 
 .ctrlBtns-frame {

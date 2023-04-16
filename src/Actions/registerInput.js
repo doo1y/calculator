@@ -1,13 +1,18 @@
 import { createElement, isValidElement } from "react";
 function registerInput(n, p, v) {
+	if (v === "^") {
+		let val = createElement("sup", { className: "startexp" });
+		n[p] = [val, ""];
+		n.push([<sup className='end'>&nbsp;&nbsp;</sup>, "pointer"]);
+		n.push([<span>&nbsp;&nbsp;</span>, ""]);
+		return n;
+	}
 	let val =
 		v === "^2" || v === "^-1"
 			? createElement("sup", { className: "startend" }, v.slice(1))
 			: v;
 	if (isValidElement(n[p][0]) && n[p][0].type === "sup") {
-		console.log("sup");
 		if (n[p][0].props.className === "startend") {
-			console.log("sup");
 			val = <sup className='start'>{val}</sup>;
 		} else if (n[p][0].props.className === "end") {
 			val = <sup className='mid'>{val}</sup>;

@@ -1,15 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const CtrlBtns = ({ click, logMode }) => {
+const CtrlBtns = ({ click }) => {
 	const ctrlBtns = [
-		<button className='up' key={0} onClick={logMode ? click.upDownClick : null}>
+		<button className='up' value='up' key={0} onClick={click.upDownClick}>
 			<FontAwesomeIcon icon={solid("arrow-up")} />
 		</button>,
-		<button
-			className='down'
-			key={1}
-			onClick={logMode ? click.upDownClick : null}>
+		<button className='down' value='down' key={1} onClick={click.upDownClick}>
 			<FontAwesomeIcon icon={solid("arrow-down")} />
 		</button>,
 		<button className='left' key={2} onClick={click.leftClick}>
