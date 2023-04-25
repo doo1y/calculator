@@ -1,4 +1,4 @@
-const NumberButtons = ({ click, mode }) => {
+const NumberButtons = ({ onNumberClick }) => {
 	const numbers = [
 		["u", "7", "O"],
 		["v", "8", "P"],
@@ -17,12 +17,8 @@ const NumberButtons = ({ click, mode }) => {
 		<button
 			key={idx}
 			className='numbers'
-			value={num.join(",")}
-			onClick={
-				mode.logMode || mode.windowMode
-					? click.onGenModeClick
-					: click.onGenClick
-			}>
+			onClick={onNumberClick}
+			value={num.join(",")}>
 			<span className='secChar'>{num[0]}</span>
 			<span className='mainChar'>{num[1]}</span>
 			<span className='alphaChar'>{num[2]}</span>
@@ -30,11 +26,7 @@ const NumberButtons = ({ click, mode }) => {
 	));
 
 	numBtn.push(
-		<button
-			key={numBtn.length}
-			className='numbers'
-			value={mode.alphaMode ? "?" : mode.secMode ? "ans" : "-"}
-			onClick={click.onGenClick}>
+		<button key={numBtn.length} className='numbers'>
 			<span className='secChar'>ans</span>
 			<span className='mainChar'>[-]</span>
 			<span className='alphaChar'>?</span>

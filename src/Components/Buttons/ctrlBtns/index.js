@@ -1,18 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const CtrlBtns = ({ click }) => {
+const CtrlBtns = ({ onLeftClick, onRightClick, upDownClick }) => {
 	const ctrlBtns = [
-		<button className='up' value='up' key={0} onClick={click.upDownClick}>
+		<button className='up' onClick={upDownClick} value='up' key={0}>
 			<FontAwesomeIcon icon={solid("arrow-up")} />
 		</button>,
-		<button className='down' value='down' key={1} onClick={click.upDownClick}>
+		<button className='down' onClick={upDownClick} value='down' key={1}>
 			<FontAwesomeIcon icon={solid("arrow-down")} />
 		</button>,
-		<button className='left' key={2} onClick={click.leftClick}>
+		<button className='left' onClick={onLeftClick} key={2}>
 			<FontAwesomeIcon icon={solid("arrow-left")} />
 		</button>,
-		<button className='right' key={3} onClick={click.rightClick}>
+		<button className='right' onClick={onRightClick} key={3}>
 			<FontAwesomeIcon icon={solid("arrow-right")} />
 		</button>,
 	];

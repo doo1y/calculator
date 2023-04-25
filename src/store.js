@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { api } from "./features/api/apiSlice";
+import { api } from "./features/reducers/apiSlice";
 
-import dataReducer from "./features/data/dataSlice";
-import varReducer from "./features/var/varSlice";
-import windowReducer from "./features/window/windowSlice";
+import dataReducer from "./features/reducers/dataSlice";
+import varReducer from "./features/reducers/varSlice";
+import windowReducer from "./features/reducers/windowSlice";
 
 export default configureStore({
 	reducer: {
 		[api.reducerPath]: api.reducer,
 		data: dataReducer,
 		vars: varReducer,
-		windowConfig: windowReducer,
+		window: windowReducer,
 	},
 
 	middleware: (getDefaultMiddleware) =>

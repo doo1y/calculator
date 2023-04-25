@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 // ln x = 2.303 log x
-const LeftFns = ({ click, turnOn }) => {
+const LeftFns = ({ onStoClick, onBasicBtnsClick }) => {
 	const fns = [
 		[
 			[
@@ -12,8 +12,8 @@ const LeftFns = ({ click, turnOn }) => {
 				"log",
 				"N",
 			],
-			click.onLogClick,
-			",,N",
+			onBasicBtnsClick,
+			",log(,N",
 		],
 		[
 			[
@@ -23,7 +23,7 @@ const LeftFns = ({ click, turnOn }) => {
 				"ln",
 				"S",
 			],
-			click.onGenClick,
+			onBasicBtnsClick,
 			",ln(, S",
 		],
 		[
@@ -35,10 +35,10 @@ const LeftFns = ({ click, turnOn }) => {
 				</span>,
 				"X",
 			],
-			click.stoClick,
+			onStoClick,
 			",,X",
 		],
-		[["off", "on"], turnOn],
+		[["off", "on"], , ""],
 	];
 
 	const leftFns = fns.map((fn, idx) => (

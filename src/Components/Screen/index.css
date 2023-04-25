@@ -13,14 +13,14 @@ div.screen {
 	color: #000;
 }
 
-div.windowOptions {
+ul.windowList {
 	height: 250px;
 	width: 430px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: flex-start;
-	margin-right: 30px;
+	margin-bottom: 0px;
 }
 
 h2.window-title {
@@ -29,16 +29,19 @@ h2.window-title {
 	left: 15px;
 }
 
-div.windowOptions p {
+li.window-config {
 	font-weight: 500;
 	font-size: 15pt;
-	margin: 5px 0 0 100px;
+	list-style: none;
+	position: relative;
+	margin-left: 20px;
 }
 
 div.windowOptions p.info {
 	font-weight: 400;
 	font-size: 10pt;
 	margin: 5px 0 0 165px;
+	margin-bottom: 0px;
 }
 
 div.welcome-screen {
@@ -70,17 +73,17 @@ span.data {
 	justify-content: flex-end;
 	align-items: flex-end;
 	color: rgb(96, 34, 202);
-	border-bottom: 1px #333333aa dashed;
+	border-bottom: 1px dashed #666666;
 }
 
 span.user-input {
 	width: 430px;
 	height: 20px;
-	margin-top: 2px;
 	border-top: 1px solid #000000;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	margin: -1px;
 }
 
 p.input {

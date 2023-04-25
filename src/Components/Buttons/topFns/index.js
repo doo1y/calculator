@@ -1,9 +1,9 @@
-const TopFns = ({ click }) => {
+const TopFns = ({ onAlphaClick }) => {
 	const fns = [
-		[["", "2nd", ""], click.secBtnClick],
-		[["quit", "mode"], click.modeBtnClick],
-		[["ins", "del"], click.onDelClick],
-		[["lock", "alpha", ""], click.alphaClick],
+		[["", "2nd", ""]],
+		[["quit", "mode"]],
+		[["ins", "del"]],
+		[["lock", "alpha", ""], onAlphaClick],
 		[["link", <>X,T,&theta;,n</>, ""]],
 		[["list", "stat"]],
 	];

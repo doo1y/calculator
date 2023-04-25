@@ -8,17 +8,18 @@ import { useState, useMemo, isValidElement, useEffect, useRef } from "react";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { evaluate, log } from "mathjs";
-import { dataAdded } from "./features/data/dataSlice";
-import { varAdded } from "./features/var/varSlice";
+import { dataAdded } from "./features/reducers/dataSlice";
+import { varAdded } from "./features/reducers/varSlice";
 import { windowConfigured } from "./features/window/windowSlice";
-import { useGetWindowConfigurationQuery } from "./features/api/apiSlice";
+import { useGetWindowConfigurationQuery } from "./features/reducers/data/apiSlice";
+import mathMenuItems from "./Actions/mathMenuItems";
 import Screen from "./Components/Screen";
 import Buttons from "./Components/Buttons";
 import changeFocus from "./Actions/changeFocus";
 import delVal from "./Actions/delVal";
 import leftRight from "./Actions/leftRight";
-import registerInput from "./Actions/registerInput";
-import renderInput from "./Actions/renderInput";
+import registerInput from "./Actions/registerInputSimplified";
+import renderInput from "./Actions/renderElements";
 
 import "./App.css";
 import { faBriefcaseClock } from "@fortawesome/free-solid-svg-icons";
@@ -26,7 +27,7 @@ import { faBriefcaseClock } from "@fortawesome/free-solid-svg-icons";
 const App = () => {
 	const [cache, setCache] = useState({});
 	const [numData, setNumData] = useState([
-		[<span>&nbsp;&nbsp;</span>, "pointer"],
+		[<span className='spacer'>&nbsp;&nbsp;</span>, "pointer"],
 	]);
 	const [mode, setMode] = useState({
 		windowMode: false,
@@ -437,24 +438,41 @@ const App = () => {
 		},
 		onGenClick: (e) => {
 			e.preventDefault();
-			const values = e.currentTarget.value.split(",");
 			let val;
+			const values = e.currentTarget.value.split(",");
 			if (!mode.alphaMode.a) val = values[1];
 			else val = values[2];
-			setNumData(registerInput(numData, pointer, val));
-			setPointer(pointer + 1);
-			if (mode.secMode)
+			if (mode.mathMode.active) {
+				const mathItem = mathMenuItems[pointer[0]][val](
+					cache.numData,
+					cache.pointer
+				);
+				setPointer(cache.pointer + 1);
+				setNumData(mathItem);
+				setCache({});
 				setMode(
 					Object.assign(mode, {
-						secMode: !mode.secMode,
+						mathMode: {
+							active: false,
+						},
 					})
 				);
-			if (mode.alphaMode.a && !mode.alphaMode.lock)
-				setMode(
-					Object.assign(mode, {
-						alphaMode: { a: !mode.alphaMode.a, lock: false },
-					})
-				);
+			} else {
+				setNumData(registerInput(numData, pointer, val));
+				setPointer(pointer + 1);
+				if (mode.secMode)
+					setMode(
+						Object.assign(mode, {
+							secMode: !mode.secMode,
+						})
+					);
+				if (mode.alphaMode.a && !mode.alphaMode.lock)
+					setMode(
+						Object.assign(mode, {
+							alphaMode: { a: !mode.alphaMode.a, lock: false },
+						})
+					);
+			}
 		},
 		onGenModeClick: (e) => {
 			e.preventDefault();

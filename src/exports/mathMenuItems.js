@@ -1,0 +1,62 @@
+import registerInput from "../Actions/updateDataList";
+
+let mathMenuItems = {
+	0: {
+		1: () => {},
+		2: () => {},
+		3: (n, p) => registerInput(n, p, "^3"),
+		4: (n, p) => registerInput(n, p, "3root"),
+		5: (n, p) => registerInput(n, p, "xroot"),
+		6: (n, p) => registerInput(n, p, "fMin("),
+		7: (n, p) => registerInput(n, p, "fMax("),
+		8: (n, p) => registerInput(n, p, "nDeriv("),
+		9: (n, p) => registerInput(n, p, "fnInt"),
+		0: (n, p) => registerInput(n, p, "summation G("),
+		A: () => {},
+		B: () => {},
+		C: () => {},
+	},
+	1: {
+		1: () => {},
+		2: () => {},
+		3: () => {},
+		4: () => {},
+		5: () => {},
+		6: () => {},
+		7: () => {},
+		8: () => {},
+		9: () => {},
+		0: () => {},
+		A: () => {},
+		B: () => {},
+		C: () => {},
+		D: () => {},
+	},
+	2: {
+		1: () => {},
+		2: () => {},
+		3: () => {},
+		4: () => {},
+		5: () => {},
+		6: () => {},
+		7: () => {},
+	},
+	3: {
+		1: () => {},
+		2: () => {},
+		3: () => {},
+		4: () => {},
+		5: () => {},
+		6: () => {},
+		7: () => {},
+		8: () => {},
+	},
+	4: {
+		1: () => {},
+		2: () => {},
+		3: () => {},
+		4: () => {},
+	},
+};
+
+export default mathMenuItems;

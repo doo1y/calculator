@@ -7,16 +7,39 @@ import CtrlBtns from "./ctrlBtns";
 import UpperBtns from "./upperBtns";
 import "./index.css";
 
-const Buttons = ({ buttonClickFns, mode, turnOn }) => {
+const Buttons = ({
+	onSecClick,
+	onDelClick,
+	onWindowClick,
+	upDownClick,
+	onMathClick,
+	onClearClick,
+	onEnterClick,
+	onStoClick,
+	onAlphaClick,
+	onExpClick,
+	onBasicBtnsClick,
+	onLeftClick,
+	onRightClick,
+}) => {
 	return (
 		<div className='buttons-frame'>
-			<UpperBtns click={buttonClickFns} />
-			<TopFns click={buttonClickFns} />
-			<MidFns click={buttonClickFns} />
-			<CtrlBtns click={buttonClickFns} />
-			<LeftFns click={buttonClickFns} turnOn={turnOn} />
-			<NumberButtons click={buttonClickFns} mode={mode} />
-			<RightFns click={buttonClickFns} />
+			<UpperBtns onWindowClick={onWindowClick} />
+			<TopFns onAlphaClick={onAlphaClick} />
+			<MidFns
+				onMathClick={onMathClick}
+				onExpClick={onExpClick}
+				onBasicBtnsClick={onBasicBtnsClick}
+				onClearClick={onClearClick}
+			/>
+			<CtrlBtns
+				onLeftClick={onLeftClick}
+				onRightClick={onRightClick}
+				upDownClick={upDownClick}
+			/>
+			<LeftFns onStoClick={onStoClick} onBasicBtnsClick={onBasicBtnsClick} />
+			<NumberButtons onNumberClick={onBasicBtnsClick} />
+			<RightFns onEnterClick={onEnterClick} />
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
-const UpperBtns = ({ click }) => {
+const UpperBtns = ({ onWindowClick }) => {
 	const fns = [
 		["y="],
-		["window", click.windowBtnClick],
+		["window", onWindowClick],
 		["zoom"],
 		["trace"],
 		["graph"],

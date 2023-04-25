@@ -1,13 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const MidFns = ({ click }) => {
+const MidFns = ({
+	onMathClick,
+	onExpClick,
+	onBasicBtnsClick,
+	onClearClick,
+}) => {
 	const fns = [
-		[["test", "math", "A"], click.mathBtnClick, ",,A"],
-		[["angle", "apps", "B"], click.onGenClick, ",,B"],
-		[["draw", "prgm", "C"], click.onGenClick, ",,C"],
-		[["distr", "vars"], click.onGenClick, ","],
-		[["", "clear", ""], click.onClearClick],
+		[["test", "math", "A"], onMathClick, ",,A"],
+		[["angle", "apps", "B"], , ",,B"],
+		[["draw", "prgm", "C"], , ",,C"],
+		[["distr", "vars"], , ","],
+		[["", "clear", ""], onClearClick],
 		[
 			[
 				"matrix",
@@ -16,7 +21,7 @@ const MidFns = ({ click }) => {
 				</>,
 				"D",
 			],
-			click.onGenClick,
+			onExpClick,
 			",^-1,D",
 		],
 		[
@@ -27,7 +32,7 @@ const MidFns = ({ click }) => {
 				"sin",
 				"E",
 			],
-			click.onGenClick,
+			onBasicBtnsClick,
 			",sin(,E",
 		],
 		[
@@ -38,7 +43,7 @@ const MidFns = ({ click }) => {
 				"cos",
 				"F",
 			],
-			click.onGenClick,
+			onBasicBtnsClick,
 			",cos(,F",
 		],
 		[
@@ -49,12 +54,13 @@ const MidFns = ({ click }) => {
 				"tan",
 				"G",
 			],
-			click.onGenClick,
+			,
 			",tan(,G",
 		],
 		[
 			[<>&pi;</>, <FontAwesomeIcon icon={solid("chevron-up")} />, "H"],
-			click.onGenClick,
+			onExpClick,
+
 			",^,H",
 		],
 		[
@@ -65,15 +71,15 @@ const MidFns = ({ click }) => {
 				</>,
 				"I",
 			],
-			click.onGenClick,
+			onExpClick,
 			",^2,I",
 		],
-		[["EE", ",", "J"], click.onGenClick, ",,J"],
-		[["{", "(", "K"], click.onGenClick, ",(,K"],
-		[["}", ")", "L"], click.onGenClick, ",),L"],
+		[["EE", ",", "J"], onBasicBtnsClick, ",,J"],
+		[["{", "(", "K"], onBasicBtnsClick, ",(,K"],
+		[["}", ")", "L"], onBasicBtnsClick, ",),L"],
 		[
 			["e", <FontAwesomeIcon icon={solid("divide")} />, "M"],
-			click.onGenClick,
+			onBasicBtnsClick,
 			",/,M",
 		],
 	];
