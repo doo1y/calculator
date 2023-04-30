@@ -20,7 +20,7 @@
 	display: grid;
 	grid-template-columns: 100px auto 100px;
 	gap: 1.5px 2px;
-	grid-column: span 4 / 6;
+
 	grid-area: numbers;
 }
 

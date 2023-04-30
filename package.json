@@ -15,10 +15,8 @@
 		"eslint": "^8.36.0",
 		"eslint-config-next": "^13.2.4",
 		"mathjs": "^11.7.0",
-		"plotly.js": "^2.22.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-plotly.js": "^2.6.0",
 		"react-redux": "^8.0.5",
 		"react-scripts": "5.0.1",
 		"web-vitals": "^2.1.4"

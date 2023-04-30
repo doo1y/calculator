@@ -26,7 +26,11 @@ const NumberButtons = ({ onNumberClick }) => {
 	));
 
 	numBtn.push(
-		<button key={numBtn.length} className='numbers'>
+		<button
+			key={numBtn.length}
+			onClick={onNumberClick}
+			value='ans,-,?'
+			className='numbers'>
 			<span className='secChar'>ans</span>
 			<span className='mainChar'>[-]</span>
 			<span className='alphaChar'>?</span>

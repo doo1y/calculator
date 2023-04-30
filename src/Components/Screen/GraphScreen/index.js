@@ -196,7 +196,7 @@ const GraphScreen = ({ inputData }) => {
 
 	useEffect(() => {
 		draw();
-	}, [canvasRef]);
+	}, [canvasRef, windowSettings]);
 
 	return (
 		<div className='screen'>
