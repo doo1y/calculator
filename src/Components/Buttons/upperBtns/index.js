@@ -1,10 +1,10 @@
-const UpperBtns = ({ onWindowClick }) => {
+const UpperBtns = ({ onWindowClick, onYPlotClick, onGraphClick }) => {
 	const fns = [
-		["y="],
+		["y=", onYPlotClick],
 		["window", onWindowClick],
 		["zoom"],
 		["trace"],
-		["graph"],
+		["graph", onGraphClick],
 	];
 
 	const upperFns = fns.map((fn, idx) => (

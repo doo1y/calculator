@@ -2,13 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const varSlice = createSlice({
 	name: "vars",
-	initialState: { vars: [] },
+	initialState: { values: [] },
 	reducers: {
 		varAdded(state, action) {
 			const { id, content, clearAll } = action.payload;
 			if (clearAll) state = [];
 			else
-				state.vars.push({
+				state.values.push({
 					id,
 					content,
 				});

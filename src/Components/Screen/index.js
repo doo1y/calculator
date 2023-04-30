@@ -14,7 +14,7 @@ const Screen = ({ inputData }) => {
 	));
 
 	useEffect(() => {
-		setInputs(renderElements(inputData, 0));
+		setInputs(renderElements(inputData));
 	}, [inputData]);
 
 	return (

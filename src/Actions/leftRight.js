@@ -6,6 +6,52 @@
 // 	return n;
 // }
 
+export function leftClickStatMode(inputData) {
+	const focusedIndex = inputData.findIndex(([x, p]) => p === "focused"),
+		pointer = inputData[focusedIndex][0].findIndex(
+			([y, z], i) => z === "pointer"
+		),
+		newData = inputData.toSpliced(focusedIndex, 1, [
+			inputData[focusedIndex][0].toSpliced(pointer, 1, [
+				inputData[focusedIndex][0][pointer][0],
+				"",
+			]),
+			"",
+		]);
+	newData[focusedIndex][0][0][1] = "";
+	if (focusedIndex === 0) {
+		newData[2][1] = "focused";
+		newData[2][0][0][1] = "pointer";
+	} else {
+		newData[focusedIndex - 1][1] = "focused";
+		newData[focusedIndex - 1][0][0][1] = "pointer";
+	}
+	return newData;
+}
+
+export function rightClickStatMode(inputData) {
+	const focusedIndex = inputData.findIndex(([x, p]) => p === "focused"),
+		pointer = inputData[focusedIndex][0].findIndex(
+			([y, z], i) => z === "pointer"
+		),
+		newData = inputData.toSpliced(focusedIndex, 1, [
+			inputData[focusedIndex][0].toSpliced(pointer, 1, [
+				inputData[focusedIndex][0][pointer][0],
+				"",
+			]),
+			"",
+		]);
+	newData[focusedIndex][0][0][1] = "";
+	if (focusedIndex === 2) {
+		newData[0][1] = "focused";
+		newData[0][0][0][1] = "pointer";
+	} else {
+		newData[focusedIndex + 1][1] = "focused";
+		newData[focusedIndex + 1][0][0][1] = "pointer";
+	}
+	return newData;
+}
+
 export function leftClick(data, lvl = 0) {
 	let pointer = data.findIndex(([val, p]) => p === "pointer"),
 		supPointer = data.findIndex(([val, p]) => p === "supPointer"),
@@ -32,7 +78,9 @@ export function leftClick(data, lvl = 0) {
 			// [[1, ""], [[[2, ""], [[[3, ""], [4, ""]], "sup"]],"supPointer"], ["null", ""]]
 			newData = newData.toSpliced(supPointer, 1, [supData, "sup"]);
 			if (newData[supPointer - 1][1] === "sup") {
-				recurseIntoSupEnd(newData[supPointer - 1][0]);
+				if (!newData[supPointer - 1][0].length)
+					newData[supPointer - 1][0].push([null, "pointer"]);
+				else recurseIntoSupEnd(newData[supPointer - 1][0]);
 				newData[pointer - 1][1] = "supPointer";
 			} else newData[supPointer - 1][1] = "pointer";
 		}
@@ -49,7 +97,9 @@ export function leftClick(data, lvl = 0) {
 			newData = newData.toSpliced(pointer, 1, [newData[pointer][0], ""]);
 		}
 		if (newData[pointer - 1][1] === "sup") {
-			recurseIntoSupEnd(newData[pointer - 1][0]);
+			if (!newData[pointer - 1][0].length)
+				newData[pointer - 1][0].push([null, "pointer"]);
+			else recurseIntoSupEnd(newData[pointer - 1][0]);
 			newData[pointer - 1][1] = "supPointer";
 		} else newData[pointer - 1][1] = "pointer";
 	}
@@ -132,7 +182,9 @@ export function rightClick(data, lvl = 0) {
 			}
 			// if the value that follows after stepping out of the recursion happens to be another exponent
 			else if (newData[supPointer + 1][1] === "sup") {
-				// then recurse into
+				if (!newData[supPointer + 1][0].length)
+					newData[supPointer + 1][0].push([null, "pointer"]);
+				// then recurse into it
 				recurseIntoSupStart(newData[supPointer + 1][0]);
 				newData[supPointer + 1][1] = "supPointer";
 			} else if (newData[supPointer + 1][0]) {
@@ -152,7 +204,9 @@ export function rightClick(data, lvl = 0) {
 		} else {
 			newData = newData.toSpliced(pointer, 1, [newData[pointer][0], ""]);
 			if (newData[pointer + 1][1] === "sup") {
-				recurseIntoSupStart(newData[pointer + 1][0]);
+				if (!newData[pointer + 1][0].length)
+					newData[pointer + 1][0].push([null, "pointer"]);
+				else recurseIntoSupStart(newData[pointer + 1][0]);
 				newData[pointer + 1][1] = "supPointer";
 			} else {
 				newData[pointer + 1][1] = "pointer";

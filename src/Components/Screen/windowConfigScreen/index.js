@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-const WindowConfigScreen = ({ pointer, windowValues }) => {
+const WindowConfigScreen = ({ windowValues }) => {
 	const blankspace = <>&nbsp;&nbsp;</>;
 	const fontAwesomeIcon = <FontAwesomeIcon icon={solid("caret-up")} />;
 	const windowListItems = [

@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultWindowSettings = [
-	["xMin", -10],
-	["xMax", 10],
-	["xScl", 1],
-	["yMin", -10],
-	["yMax", 10],
-	["yScl", 1],
-	["xRes", 1],
-	["freeTraceValues", 0.075757575757575],
-	["functionTraceValues", 0.015151515151515],
+	["xMin", -10], // smallest value of x in view on the x-axis
+	["xMax", 10], // largest value of x in view on the x-axis
+	["xScl", 1], // distance between tick marks on the x-axis
+	["yMin", -10], // smallest value of y in view on the y-axis
+	["yMax", 10], // largest value of y in view on the y-axis
+	["yScl", 1], // distance between tick marks on the y-axis
+	["xRes", 1], // determines the resolution of the graph
+	// traceStep and freeTraceValue are linked together
+	// traceStep is always twice as big as the freeTraceValue
+	["freeTraceValue", 0.075757575757575],
+	["traceStep", 0.015151515151515], // controls the X-value jump when tracing a function on a graph screen.
 ];
 
 const windowSlice = createSlice({

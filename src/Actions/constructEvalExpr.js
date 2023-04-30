@@ -3,7 +3,7 @@ const constructEvalExpr = (inputData, vars) => {
 		if (/^[A-Z]*$/.test(v) && v.length > 0) {
 			const variable = vars.find((el) => el.id === v);
 			if (!variable) {
-				return 0;
+				return v;
 			} else return variable.content;
 		} else if (v === "e") return Math.E;
 		else if (v === "ln(") return `log(`;

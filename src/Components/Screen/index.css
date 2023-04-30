@@ -13,7 +13,38 @@ div.screen {
 	color: #000;
 }
 
-ul.windowList {
+div.screen.stat-screen {
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+div.statscreen-title__container {
+	display: flex;
+	width: 100%;
+	justify-content: space-evenly;
+	align-items: flex-start;
+}
+
+div.scroller {
+	width: 430px;
+	height: 300px;
+	overflow: auto;
+}
+
+h2.focused {
+	border-bottom: solid black 1px;
+}
+
+ul.statScreen-itemList {
+	list-style: none;
+	font-weight: 500;
+	font-size: 15pt;
+	list-style: none;
+	position: relative;
+}
+
+ul.windowList,
+ul.yPlotList {
 	height: 250px;
 	width: 430px;
 	display: flex;
@@ -29,7 +60,8 @@ h2.window-title {
 	left: 15px;
 }
 
-li.window-config {
+li.window-config,
+li.yplot-config {
 	font-weight: 500;
 	font-size: 15pt;
 	list-style: none;
@@ -64,6 +96,25 @@ p.log {
 
 p.log.selected {
 	border: 1px #33333377 dashed;
+}
+
+span.list-key {
+	width: 20px;
+	display: inline-block;
+}
+
+span.yPlot-listItem__selector {
+	width: 18px;
+	height: 20px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+span.active {
+	background-color: #444444ff;
+	color: #ffffff;
+	border-radius: 10%;
 }
 
 span.data {

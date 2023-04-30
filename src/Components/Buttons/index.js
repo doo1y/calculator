@@ -8,6 +8,9 @@ import UpperBtns from "./upperBtns";
 import "./index.css";
 
 const Buttons = ({
+	onGraphClick,
+	onStatClick,
+	onYPlotClick,
 	onSecClick,
 	onDelClick,
 	onWindowClick,
@@ -24,8 +27,17 @@ const Buttons = ({
 }) => {
 	return (
 		<div className='buttons-frame'>
-			<UpperBtns onWindowClick={onWindowClick} />
-			<TopFns onAlphaClick={onAlphaClick} />
+			<UpperBtns
+				onWindowClick={onWindowClick}
+				onYPlotClick={onYPlotClick}
+				onGraphClick={onGraphClick}
+			/>
+			<TopFns
+				onBasicBtnsClick={onBasicBtnsClick}
+				onAlphaClick={onAlphaClick}
+				onDelClick={onDelClick}
+				onStatClick={onStatClick}
+			/>
 			<MidFns
 				onMathClick={onMathClick}
 				onExpClick={onExpClick}
@@ -39,7 +51,10 @@ const Buttons = ({
 			/>
 			<LeftFns onStoClick={onStoClick} onBasicBtnsClick={onBasicBtnsClick} />
 			<NumberButtons onNumberClick={onBasicBtnsClick} />
-			<RightFns onEnterClick={onEnterClick} />
+			<RightFns
+				onEnterClick={onEnterClick}
+				onBasicBtnsClick={onBasicBtnsClick}
+			/>
 		</div>
 	);
 };
