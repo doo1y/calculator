@@ -203,9 +203,23 @@ const App = () => {
 			const focusedIdx = inputData.findIndex(([x, p, b], i) => p === "focused"),
 				pointerIdx = inputData[focusedIdx][0].findIndex(
 					([x, p]) => p === "pointer"
+				),
+				supPointerIdx = inputData[focusedIdx][0].findIndex(
+					([x, p]) => p === "supPointer"
 				);
+			// if there is a supPointer, the pointer is inside
+			if (supPointerIdx >= 0) {
+				console.log(supPointerIdx);
+				newData = inputData.toSpliced(focusedIdx, 1, [
+					leftClick(inputData[focusedIdx][0]),
+					"focused",
+					inputData[focusedIdx][2],
+				]);
+				setInputData(newData);
+				return;
+			}
 			// if pointerIdx is at 0
-			if (!pointerIdx) {
+			else if (!pointerIdx) {
 				newData = inputData.toSpliced(focusedIdx, 1, [
 					inputData[focusedIdx][0].toSpliced(pointerIdx, 1, [
 						inputData[focusedIdx][0][pointerIdx][0],
@@ -257,7 +271,19 @@ const App = () => {
 			const focusedIdx = inputData.findIndex(([x, p, b], i) => p === "focused"),
 				pointerIdx = inputData[focusedIdx][0].findIndex(
 					([x, p]) => p === "pointer"
+				),
+				supPointerIdx = inputData[focusedIdx][0].findIndex(
+					([x, p]) => p === "supPointer"
 				);
+			if (supPointerIdx >= 0) {
+				newData = inputData.toSpliced(focusedIdx, 1, [
+					rightClick(inputData[focusedIdx][0]),
+					"focused",
+					inputData[focusedIdx][2],
+				]);
+				setInputData(newData);
+				return;
+			}
 			// if pointerIdx is not to be found, the pointer is currently at the bool
 			if (pointerIdx < 0) {
 				newData = inputData.toSpliced(focusedIdx, 1, [
